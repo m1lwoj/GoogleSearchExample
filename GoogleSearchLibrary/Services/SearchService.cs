@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoogleSearchLibrary.Models;
 using GoogleSearchLibrary.Configuration;
-using Google.Apis.Customsearch.v1;
-using Google.Apis.Services;
-using Google.Apis.Customsearch.v1.Data;
+using System.Linq;
 
 namespace GoogleSearchLibrary.Services
 {
@@ -12,47 +9,36 @@ namespace GoogleSearchLibrary.Services
     {
         private static byte GooglePageSize = 10;
 
-        public IConfigurationProvider ConfigurationProvider
+        private ConfigurationModel _config => _configurationProvider.GetConfiguration();
+
+        private IConfigurationProvider _configurationProvider;
+
+        private IGoogleSearchProcess _googleSearchProcess;
+
+        public SearchService(IConfigurationProvider configurationProvider)
         {
-            get
-            {
-                return new JsonConfigurationProvider();
-            }
+            _configurationProvider = new JsonConfigurationProvider();
+            _googleSearchProcess = new GoogleSearchProcess(_config);
         }
 
         public IEnumerable<SearchResult> GetResults(string searchText)
         {
+            _googleSearchProcess.SetUp(searchText, _config.MaxResults);
             var results = new List<SearchResult>();
-            var config = ConfigurationProvider.GetConfiguration();
-            var customSearchService = new CustomsearchService(new BaseClientService.Initializer { ApiKey = config.ApiKey });
-            var listRequest = customSearchService.Cse.List(searchText);
-            listRequest.Cx = config.EngineId;
 
-            IList<Result> paging = new List<Result>();
-            var page = 0;
-            var loadedResults = 0;
-            while (paging != null)
+            while (_googleSearchProcess.HasMoreResults)
             {
-                Console.WriteLine($"Page {page}");
-                long startPoint = page * GooglePageSize + 1;
-                if(startPoint >= config.MaxResults)
-                {
-                    break;
-                }
+                long startPoint = _googleSearchProcess.CurrentPage * GooglePageSize + 1;
 
-                listRequest.Start = startPoint;
-                paging = listRequest.Execute().Items;
-                if (paging != null)
-                {
-                    foreach (var item in paging)
+                results.AddRange(_googleSearchProcess.GetResults(startPoint)
+                    .Select(p => new SearchResult()
                     {
-                        results.Add(new SearchResult() { Link = item.Link, Title = item.Title });
-                        loadedResults++;
-                    }
-                    page++;
-                }
+                        Link = p.Link,
+                        Title = p.Title
+                    }));
             }
-            Console.WriteLine("Done.");
+
+            _googleSearchProcess.Finish();
 
             return results;
         }
