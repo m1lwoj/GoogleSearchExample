@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GoogleSearchExample\GoogleSearchExample.csproj" />
-    <ProjectReference Include="..\GoogleSearchLibrary\GoogleSearchLibrary.csproj" />
+    <ProjectReference Include="..\..\App\GoogleSearchLibrary\GoogleSearchLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

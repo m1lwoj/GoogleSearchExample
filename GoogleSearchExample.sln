@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchExample", "GoogleSearchExample\GoogleSearchExample.csproj", "{5037513F-FECC-43E7-BFC8-ADF085FFEA62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchExample", "App\GoogleSearchExample\GoogleSearchExample.csproj", "{5037513F-FECC-43E7-BFC8-ADF085FFEA62}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchLibrary", "GoogleSearchLibrary\GoogleSearchLibrary.csproj", "{41D5A007-A232-4187-8237-899B9462984A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchLibrary", "App\GoogleSearchLibrary\GoogleSearchLibrary.csproj", "{41D5A007-A232-4187-8237-899B9462984A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchLibrary.Tests", "GoogleSearchLibraryTests\GoogleSearchLibrary.Tests.csproj", "{F1476FD8-E350-4B24-A002-451787895B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleSearchLibrary.Tests", "Tests\GoogleSearchLibrary.Tests\GoogleSearchLibrary.Tests.csproj", "{F1476FD8-E350-4B24-A002-451787895B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSearchExample.Tests", "GoogleSearchExample.Tests\GoogleSearchExample.Tests.csproj", "{CA970A76-EB39-45F0-9DC7-24904D60164F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSearchExample.Tests", "Tests\GoogleSearchExample.Tests\GoogleSearchExample.Tests.csproj", "{CA970A76-EB39-45F0-9DC7-24904D60164F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{4D014404-A41C-4EC9-AB77-DD487A662C2D}"
 EndProject
