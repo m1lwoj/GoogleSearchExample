@@ -8,7 +8,7 @@ namespace GoogleSearchExample.Tests.Models
 {
     public class SearchResultViewModelTests
     {
-        [Fact()]
+        [Fact(DisplayName = "Succesfull SearchResultViewModel mapping")]
         public void SuccesfullMapping()
         {
             var initialModel = new SearchResult()
@@ -23,7 +23,7 @@ namespace GoogleSearchExample.Tests.Models
             Assert.Equal(2, convertedModel.TimeElapsed);
         }
 
-        [Fact()]
+        [Fact(DisplayName = "2 decimal places in SearchResultViewModel mapping")]
         public void ValidDecimalPlaces()
         {
             var initialModel = new SearchResult()

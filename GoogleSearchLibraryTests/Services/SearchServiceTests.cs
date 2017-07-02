@@ -18,7 +18,7 @@ namespace GoogleSearchLibraryTests.Services
             var count = result.Items.Count();
         }
 
-        [Fact()]
+        [Fact(DisplayName = "Empty results for empty text")]
         public void EmptyResultsForEmptyText()
         {
             var searchService = new SearchService();
@@ -26,7 +26,7 @@ namespace GoogleSearchLibraryTests.Services
             Assert.False(result.Items.Any());
         }
 
-        [Fact()]
+        [Fact(DisplayName = "Results count same as page size")]
         public void ResultsEqualsToPageSize()
         {
             var configProviderMock = Mock.Of<IConfigurationProvider>();

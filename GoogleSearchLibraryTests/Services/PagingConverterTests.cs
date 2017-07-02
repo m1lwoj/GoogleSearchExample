@@ -8,7 +8,7 @@ namespace GoogleSearchLibraryTests.Services
 {
     public class PagingConverterTests
     {
-        [Theory()]
+        [Theory(DisplayName = "Coneverting page and pagesize to Google range")]
         [InlineData(1, 12, 1, 20)]
         [InlineData(2, 12, 11, 30)]
         [InlineData(3, 25, 51, 80)]

@@ -20,50 +20,7 @@ namespace GoogleSearchExample.Controllers
 
         public IActionResult Index(string searchText)
         {
-
-            //var result = (SearchResultViewModel)_searchService.GetResults(searchText, Page, PageSize);
-            //result.SearchingText = searchText;
-
-            //return View(result);
-
-
-            var result = new SearchResultViewModel()
-            {
-                Results = new List<SearchResultItem>()
-                {
-                    new SearchResultItem
-                    {
-                        Link = "http://google.com",
-                        Snippet = "bb",
-                        Title = "cc"
-                    },
-                     new SearchResultItem
-                    {
-                        Link = "aa",
-                        Snippet = "bb",
-                        Title = "cc"
-                    },
-                      new SearchResultItem
-                    {
-                        Link = "aa",
-                        Snippet = "bb",
-                        Title = "cc"
-                    },
-                       new SearchResultItem
-                    {
-                        Link = "aa",
-                        Snippet = "bb",
-                        Title = "cc"
-                    },
-                        new SearchResultItem
-                    {
-                        Link = "aa",
-                        Snippet = "bb",
-                        Title = "cc"
-                    }
-                }
-            };
-
+            var result = (SearchResultViewModel)_searchService.GetResults(searchText, Page, PageSize);
             result.SearchingText = searchText;
 
             return View(result);
