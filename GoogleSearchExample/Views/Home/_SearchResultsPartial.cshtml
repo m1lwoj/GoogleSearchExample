@@ -1,0 +1,19 @@
+﻿@model GoogleSearchExample.Models.SearchResultViewModel
+
+<div class="container">
+    @if (!string.IsNullOrEmpty(Model.SearchingText))
+    { 
+        <hgroup class="mb20">
+            <h1>Search Results</h1>
+            <h2 class="lead"><strong class="text-danger">@Model.SearchingText</strong> Found in <strong class="text-danger">@Model.TimeElapsed</strong> seconds</h2>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            @{
+                foreach (var item in Model.Results)
+                {
+                    @Html.Partial("_SearchResultItemPartial", item);
+                }
+            }
+        </section>
+    }
+</div>

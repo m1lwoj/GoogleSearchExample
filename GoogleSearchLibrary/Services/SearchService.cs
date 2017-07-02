@@ -2,45 +2,54 @@
 using GoogleSearchLibrary.Models;
 using GoogleSearchLibrary.Configuration;
 using System.Linq;
+using System;
+using GoogleSearchLibrary.Configuration.DI;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("GoogleSearchLibrary.Tests")]
 namespace GoogleSearchLibrary.Services
 {
     public class SearchService : ISearchService
     {
-        private static byte GooglePageSize = 10;
-
-        private ConfigurationModel _config => _configurationProvider.GetConfiguration();
-
         private IConfigurationProvider _configurationProvider;
 
-        private IGoogleSearchProcess _googleSearchProcess;
+        private IGoogleSearchAdapter _googleSearchAdapter;
 
-        public SearchService(IConfigurationProvider configurationProvider)
+        public SearchService() : this(
+            ServiceLocator.Current.Get<IGoogleSearchAdapter>(),
+            ServiceLocator.Current.Get<IConfigurationProvider>())
         {
-            _configurationProvider = new JsonConfigurationProvider();
-            _googleSearchProcess = new GoogleSearchProcess(_config);
         }
 
-        public IEnumerable<SearchResult> GetResults(string searchText)
+        internal SearchService(IGoogleSearchAdapter googleSearchAdapter, IConfigurationProvider configProvider)
         {
-            _googleSearchProcess.SetUp(searchText, _config.MaxResults);
-            var results = new List<SearchResult>();
+            _configurationProvider = configProvider;
+            _googleSearchAdapter = googleSearchAdapter;
+        }
 
-            while (_googleSearchProcess.HasMoreResults)
+        public SearchResult GetResults(string searchText, int page, int pageSize)
+        {
+            if (!string.IsNullOrEmpty(searchText))
             {
-                long startPoint = _googleSearchProcess.CurrentPage * GooglePageSize + 1;
-
-                results.AddRange(_googleSearchProcess.GetResults(startPoint)
-                    .Select(p => new SearchResult()
+                var startTime = DateTime.Now.TimeOfDay;
+                var result = new SearchResult()
+                {
+                    Items = _googleSearchAdapter.GetSearchResults(searchText, page, pageSize)
+                    .Take(pageSize)
+                    .Select(p => new SearchResultItem()
                     {
                         Link = p.Link,
-                        Title = p.Title
-                    }));
+                        Title = p.Title,
+                        Snippet = p.Snippet
+                    }),
+
+                    TimeElapsed = (DateTime.Now.TimeOfDay - startTime).TotalSeconds
+                };
+
+                return result;
             }
 
-            _googleSearchProcess.Finish();
-
-            return results;
+            return new SearchResult() { Items = new List<SearchResultItem>() };
         }
     }
 }

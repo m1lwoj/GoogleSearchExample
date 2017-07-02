@@ -1,35 +1,72 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using GoogleSearchExample.Models;
+using GoogleSearchLibrary.Services;
+using GoogleSearchLibrary.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GoogleSearchExample.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private static byte PageSize = 12;
+        private static byte Page = 1;
+
+        private ISearchService _searchService;
+
+        public HomeController(ISearchService searchService)
         {
-            return View();
+            _searchService = searchService;
         }
 
-        public IActionResult About()
+        public IActionResult Index(string searchText)
         {
-            ViewData["Message"] = "Your application description page.";
 
-            return View();
-        }
+            //var result = (SearchResultViewModel)_searchService.GetResults(searchText, Page, PageSize);
+            //result.SearchingText = searchText;
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
+            //return View(result);
 
-            return View();
-        }
 
-        public IActionResult Error()
-        {
-            return View();
+            var result = new SearchResultViewModel()
+            {
+                Results = new List<SearchResultItem>()
+                {
+                    new SearchResultItem
+                    {
+                        Link = "http://google.com",
+                        Snippet = "bb",
+                        Title = "cc"
+                    },
+                     new SearchResultItem
+                    {
+                        Link = "aa",
+                        Snippet = "bb",
+                        Title = "cc"
+                    },
+                      new SearchResultItem
+                    {
+                        Link = "aa",
+                        Snippet = "bb",
+                        Title = "cc"
+                    },
+                       new SearchResultItem
+                    {
+                        Link = "aa",
+                        Snippet = "bb",
+                        Title = "cc"
+                    },
+                        new SearchResultItem
+                    {
+                        Link = "aa",
+                        Snippet = "bb",
+                        Title = "cc"
+                    }
+                }
+            };
+
+            result.SearchingText = searchText;
+
+            return View(result);
         }
     }
 }

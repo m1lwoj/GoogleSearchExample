@@ -13,7 +13,7 @@ namespace GoogleSearchLibraryTests.Configuration
 
             Assert.True(!string.IsNullOrEmpty(result.ApiKey));
             Assert.True(!string.IsNullOrEmpty(result.EngineId));
-            Assert.NotEqual(0, result.MaxResults);
+            Assert.NotEqual(0, result.ResultsOnPage);
         }
     }
 }

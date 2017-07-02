@@ -1,0 +1,10 @@
+﻿@using GoogleSearchLibrary.Models
+@model SearchResultItem
+
+<article class="search-result row">
+    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+        <h3><a href="@Model.Link" title="">@Model.Title</a></h3>
+        <p>@Model.Snippet</p>
+    </div>
+    <span class="clearfix borda"></span>
+</article>
